@@ -30,7 +30,7 @@ public class Dates {
 
     @NotNull
     @Contract("_ -> new")
-    private static ServiceDate makeServiceDate(@NotNull XMLGregorianCalendar xgc) {
+    public static ServiceDate makeServiceDate(@NotNull XMLGregorianCalendar xgc) {
         return new ServiceDate(xgc.getYear(), xgc.getMonth(), xgc.getDay());
     }
 }

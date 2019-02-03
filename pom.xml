@@ -4,7 +4,7 @@
 
     <groupId>com.kurtraschke</groupId>
     <artifactId>common-utils</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <issueManagement>
@@ -24,7 +24,7 @@
         <url>https://github.com/kurtraschke/common-utils</url>
         <connection>scm:git:git://github.com/kurtraschke/common-utils.git</connection>
         <developerConnection>scm:git:git@github.com:kurtraschke/common-utils</developerConnection>
-      <tag>v1.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
 

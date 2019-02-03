@@ -1,5 +1,8 @@
 package com.kurtraschke.common;
 
+import com.google.common.collect.BoundType;
+import com.google.common.collect.DiscreteDomain;
+import com.google.common.collect.Range;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -75,5 +78,30 @@ public class Utils {
         }
 
         return extractionDestination;
+    }
+
+    public static <T extends Comparable<T>> T endpointFromRange(Range<T> range,
+                                                                DiscreteDomain<T> domain,
+                                                                @NotNull Predicate<Range<T>> hasBound,
+                                                                @NotNull Function<Range<T>, BoundType> boundTypeFunction,
+                                                                @NotNull Function<Range<T>, T> endpointGetter,
+                                                                BiFunction<DiscreteDomain<T>, T, T> shifter) {
+
+        if (hasBound.test(range)) {
+            final T endpoint = endpointGetter.apply(range);
+            return boundTypeFunction.apply(range) == BoundType.CLOSED ? endpoint : shifter.apply(domain, endpoint);
+        } else {
+            throw new IllegalArgumentException("Cannot obtain endpoint from unbounded range.");
+        }
+    }
+
+    public static <T extends Comparable<T>> T firstElementInRange(Range<T> range, DiscreteDomain<T> domain) {
+        return endpointFromRange(range, domain, Range::hasLowerBound, Range::lowerBoundType,
+                Range::lowerEndpoint, DiscreteDomain::next);
+    }
+
+    public static <T extends Comparable<T>> T lastElementInRange(Range<T> range, DiscreteDomain<T> domain) {
+        return endpointFromRange(range, domain, Range::hasUpperBound, Range::upperBoundType,
+                Range::upperEndpoint, DiscreteDomain::previous);
     }
 }

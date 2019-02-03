@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.*;
@@ -60,5 +61,19 @@ public class Utils {
     @Contract("null -> !null; !null -> !null")
     public static <T> Stream<T> arrayStream(T[] array) {
         return array == null ? Stream.empty() : Arrays.stream(array);
+    }
+
+    public static Path validateExtractionDestination(@NotNull Path root, @NotNull Path toExtract) {
+        //https://snyk.io/research/zip-slip-vulnerability#java
+
+        final Path canonicalRoot = root.toAbsolutePath().normalize();
+
+        final Path extractionDestination = canonicalRoot.resolve(toExtract).normalize();
+
+        if (!extractionDestination.startsWith(canonicalRoot)) {
+            throw new IllegalArgumentException(String.format("Attempted to extract file %s outside root %s", root.toString(), toExtract.toString()));
+        }
+
+        return extractionDestination;
     }
 }

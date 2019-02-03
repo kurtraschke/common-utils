@@ -15,13 +15,13 @@ class DomainsTest {
 
         final LocalDate date = LocalDate.of(1904, 10, 27);
 
-        assertEquals(domain.next(date), LocalDate.of(1904, 10, 28));
-        assertEquals(domain.previous(date), LocalDate.of(1904, 10, 26));
+        assertEquals(LocalDate.of(1904, 10, 28), domain.next(date));
+        assertEquals(LocalDate.of(1904, 10, 26), domain.previous(date));
 
-        assertEquals(domain.distance(date, domain.next(domain.next(date))), 2);
+        assertEquals(2, domain.distance(date, domain.next(domain.next(date))));
 
-        assertEquals(domain.minValue(), LocalDate.MIN);
-        assertEquals(domain.maxValue(), LocalDate.MAX);
+        assertEquals(LocalDate.MIN, domain.minValue());
+        assertEquals(LocalDate.MAX, domain.maxValue());
     }
 
     @Test
@@ -30,9 +30,9 @@ class DomainsTest {
 
         final ServiceDate date = new ServiceDate(1863, 1, 10);
 
-        assertEquals(domain.next(date), new ServiceDate(1863, 1, 11));
-        assertEquals(domain.previous(date), new ServiceDate(1863, 1, 9)); //The Day Before (You know what they’ll call it, they’ll call it the Tube)
+        assertEquals(new ServiceDate(1863, 1, 11), domain.next(date));
+        assertEquals(new ServiceDate(1863, 1, 9), domain.previous(date)); //The Day Before (You know what they’ll call it, they’ll call it the Tube)
 
-        assertEquals(domain.distance(date, domain.next(domain.next(date))), 2);
+        assertEquals(2, domain.distance(date, domain.next(domain.next(date))));
     }
 }

@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Domains {
-    private Domains(){}
+    private Domains() {
+    }
 
     @Contract(pure = true)
     public static DiscreteDomain<LocalDate> localDate() {
@@ -19,17 +20,17 @@ public class Domains {
         private static final LocalDateDiscreteDomain INSTANCE = new LocalDateDiscreteDomain();
 
         @Override
-        public LocalDate next(LocalDate value) {
+        public LocalDate next(final LocalDate value) {
             return value.plusDays(1);
         }
 
         @Override
-        public LocalDate previous(LocalDate value) {
+        public LocalDate previous(final LocalDate value) {
             return value.minusDays(1);
         }
 
         @Override
-        public long distance(LocalDate start, LocalDate end) {
+        public long distance(final LocalDate start, final LocalDate end) {
             return ChronoUnit.DAYS.between(start, end);
         }
 
@@ -53,17 +54,17 @@ public class Domains {
         private static final ServiceDateDiscreteDomain INSTANCE = new ServiceDateDiscreteDomain();
 
         @Override
-        public ServiceDate next(ServiceDate value) {
+        public ServiceDate next(final ServiceDate value) {
             return value.next();
         }
 
         @Override
-        public ServiceDate previous(ServiceDate value) {
+        public ServiceDate previous(final ServiceDate value) {
             return value.previous();
         }
 
         @Override
-        public long distance(ServiceDate start, ServiceDate end) {
+        public long distance(final ServiceDate start, final ServiceDate end) {
             return start.difference(end);
         }
     }

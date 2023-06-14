@@ -14,23 +14,29 @@ public class Dates {
     private Dates() {
     }
 
-    public static Stream<LocalDate> iterateDates(LocalDate start, LocalDate end) {
+    public static Stream<LocalDate> iterateDates(final LocalDate start, final LocalDate end) {
         return ContiguousSet.create(Range.closed(start, end), Domains.localDate()).stream();
     }
 
-    public static Stream<ServiceDate> iterateServiceDates(ServiceDate start, ServiceDate end) {
+    public static Stream<ServiceDate> iterateServiceDates(final ServiceDate start, final ServiceDate end) {
         return ContiguousSet.create(Range.closed(start, end), Domains.serviceDate()).stream();
     }
 
     @NotNull
     @Contract("_ -> new")
-    public static ServiceDate makeServiceDate(@NotNull LocalDate ld) {
+    public static ServiceDate makeServiceDate(final LocalDate ld) {
         return new ServiceDate(ld.getYear(), ld.getMonthValue(), ld.getDayOfMonth());
     }
 
     @NotNull
     @Contract("_ -> new")
-    public static ServiceDate makeServiceDate(@NotNull XMLGregorianCalendar xgc) {
+    public static ServiceDate makeServiceDate(final XMLGregorianCalendar xgc) {
         return new ServiceDate(xgc.getYear(), xgc.getMonth(), xgc.getDay());
+    }
+
+    @NotNull
+    @Contract("_ -> new")
+    public static LocalDate makeLocalDate(final ServiceDate sd) {
+        return LocalDate.of(sd.getYear(), sd.getMonth(), sd.getDay());
     }
 }

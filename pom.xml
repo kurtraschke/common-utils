@@ -14,32 +14,44 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>deploy-to-gitlab</id>
+            <distributionManagement>
+                <repository>
+                    <id>gitlab-maven</id>
+                    <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven</url>
+                </repository>
+                <snapshotRepository>
+                    <id>gitlab-maven</id>
+                    <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven</url>
+                </snapshotRepository>
+            </distributionManagement>
+            <repositories>
+                <repository>
+                    <id>gitlab-maven</id>
+                    <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven</url>
+                </repository>
+            </repositories>
+        </profile>
+        <profile>
+            <id>deploy-to-github</id>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>GitHub Packages</name>
+                    <url>https://maven.pkg.github.com/kurtraschke/common-utils/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
     <repositories>
         <repository>
             <id>public.onebusaway.org</id>
             <url>https://repo.camsys-apps.com/releases/</url>
         </repository>
-        <repository>
-            <id>gitlab-maven</id>
-            <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven</url>
-        </repository>
     </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/kurtraschke/common-utils/</url>
-        </repository>
-        <repository>
-            <id>gitlab-maven</id>
-            <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven</url>
-        </repository>
-        <snapshotRepository>
-            <id>gitlab-maven</id>
-            <url>${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/maven</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <issueManagement>
         <url>https://github.com/kurtraschke/common-utils/issues</url>
